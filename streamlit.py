@@ -2,9 +2,9 @@ import pandas as pd
 import streamlit as st
 
 
-df = pd.read_excel("C://Users//lucas.rodriguez//OneDrive - Diebold Nixdorf//Escritorio//Codigo//PARTES//intento70-30-05-04.xlsx")
+df = pd.read_excel("intento70-30-05-04.xlsx")
 
-pdescripciones=pd.read_excel("C://Users//lucas.rodriguez//OneDrive - Diebold Nixdorf//Escritorio//Codigo//PARTES//FormatoNsPartes.xlsx")
+pdescripciones=pd.read_excel("FormatoNsPartes.xlsx")
 
 
 # Combinar los dataframes en función de la columna "PARTES" y "PARTE"
