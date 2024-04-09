@@ -8,7 +8,7 @@ df = pd.read_excel("intento70-30-05-04.xlsx")
 
 pdescripciones=pd.read_excel("FormatoNsPartes.xlsx")
 
-daily = pd.read_excel("Daily2.xlsx")
+daily = pd.read_excel("Daily.xlsx")
 
 # Combinar los dataframes en función de la columna "PARTES" y "PARTE"
 merged_df = pd.merge(df, pdescripciones[['PARTE', 'DESCRIPCION']], how='left', left_on='PARTES', right_on='PARTE')
