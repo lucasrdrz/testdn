@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 
-df = pd.read_excel("intento70-30-05-04.xlsx")
+df = pd.read_excel("intento70-30.xlsx")
 
 pdescripciones=pd.read_excel("FormatoNsPartes.xlsx")
 
