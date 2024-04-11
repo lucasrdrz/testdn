@@ -4,7 +4,7 @@ import base64
 
 # Cargar los dataframes
 
-merged_df = pd.read_excel("intento70-30-05-04.xlsx")
+merged_df = pd.read_excel("intento70-30.xlsx")
 
 pdescripciones=pd.read_excel("FormatoNsPartes.xlsx")
 
