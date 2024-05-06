@@ -41,7 +41,8 @@ st.markdown ('CLIENTES AFECTADOS POR PARTE')
 parte_especifica= st.selectbox("Selecciona una parte:", [""] + resultado_final['PARTES'].tolist())
 
 # Filtrar el DataFrame por la parte específica ingresada
-parte_especifica = merged_df[merged_df['PARTES'] == int(parte_especifica)]
+#parte_especifica = merged_df[merged_df['PARTES'] == int(parte_especifica)]
+parte_especifica = merged_df[merged_df['PARTES'] == parte_especifica]
 
 # Verificar si hay datos para el número de parte ingresado
 if not parte_especifica.empty:
