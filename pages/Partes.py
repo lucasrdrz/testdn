@@ -29,16 +29,26 @@ cliente_seleccionado_df = merged_df[merged_df['NOMBRE CLIENTE'] == cliente_selec
 # Verificar si hay datos para el cliente seleccionado
 if not cliente_seleccionado_df.empty:
     # Agrupar por número de parte y contar la cantidad de ocurrencias para el cliente seleccionado
-    numeros_parte_cliente = cliente_seleccionado_df.groupby('PARTES').agg({'TICKET NUMBER': 'nunique', 'descripciones': 'first'}).reset_index()
+    numeros_parte_cliente = cliente_seleccionado_df.groupby('PARTES').agg({'TICKET NUMBER': ['nunique', list], 'descripciones': 'first'}).reset_index()
     
     # Renombrar las columnas
-    numeros_parte_cliente.rename(columns={'TICKET NUMBER': 'TICKETS AFECTADOS', 'descripciones': 'DESCRIPCION'}, inplace=True)
+    numeros_parte_cliente.columns = ['PARTES', 'TICKETS AFECTADOS', 'LISTA TICKETS', 'DESCRIPCION']
     
     # Ordenar los resultados de mayor a menor según el total de tickets afectados
     numeros_parte_cliente = numeros_parte_cliente.sort_values(by='TICKETS AFECTADOS', ascending=False)
 
-    # Mostrar los resultados
-    st.table(numeros_parte_cliente)
+    # Agregar el número de ticket al principio de cada fila
+    numeros_parte_cliente['LISTA TICKETS'] = numeros_parte_cliente.apply(lambda row: ', '.join(map(str, row['LISTA TICKETS'])), axis=1)
+
+    # Reordenar las columnas
+    numeros_parte_cliente = numeros_parte_cliente[['LISTA TICKETS', 'PARTES', 'DESCRIPCION', 'TICKETS AFECTADOS']]
+
+    # Desplegable para mostrar los tickets individualmente
+    show_tickets = st.checkbox("Mostrar tickets")
+    if show_tickets:
+        st.table(numeros_parte_cliente)
+    else:
+        st.table(numeros_parte_cliente[['PARTES', 'DESCRIPCION', 'TICKETS AFECTADOS']])
 
     # Exportar los resultados a un archivo CSV si se hace clic en un botón
     if st.button("Exportar a CSV"):
@@ -48,5 +58,4 @@ if not cliente_seleccionado_df.empty:
         st.markdown(href, unsafe_allow_html=True)
 else:
     st.write("No se encontraron datos para el cliente seleccionado.")
-
     
