@@ -1,7 +1,11 @@
 import pandas as pd
 import streamlit as st
 import pip
-
+import datetime
+# Obtener la fecha y hora actual
+fecha_hora_actual = datetime.datetime.now()
+ # Mostrar la fecha y hora de la última actualización en la barra lateral
+st.sidebar.write(f"Última actualización: {fecha_hora_actual}")
 pip.main(["install", "openpyxl"])
 
 # Cargar los DataFrames
