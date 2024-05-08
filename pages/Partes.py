@@ -1,7 +1,11 @@
 import pandas as pd
 import streamlit as st
 import base64
-
+import datetime
+# Obtener la fecha y hora actual
+fecha_hora_actual = datetime.datetime.now()
+ # Mostrar la fecha y hora de la última actualización en la barra lateral
+st.sidebar.write(f"Última actualización: {fecha_hora_actual}")
 # Cargar los dataframes
 
 merged_df = pd.read_excel("intento70-30.xlsx")
