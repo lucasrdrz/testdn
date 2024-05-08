@@ -34,7 +34,7 @@ resultado_final = tickets_por_parte[['PARTES', 'DESCRIPCION', 'TICKETS AFECTADOS
 resultado_final = resultado_final.sort_values(by='TICKETS AFECTADOS', ascending=False)
 
 
-st.markdown ('CLIENTES AFECTADOS POR PARTE')
+#st.markdown ('CLIENTES AFECTADOS POR PARTE')
 
 
 # Obtener el número de parte específica ingresado por el usuario
