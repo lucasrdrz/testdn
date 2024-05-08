@@ -1,12 +1,17 @@
 import pandas as pd
 import streamlit as st
 import datetime
+import pytz
 
-# Obtener la fecha y hora actual
-fecha_hora_actual = datetime.datetime.now()
+# Obtener la fecha y hora actual en UTC
+fecha_hora_actual_utc = datetime.datetime.now(pytz.utc)
+
+# Convertir la fecha y hora actual a la zona horaria de Argentina (GMT-3)
+zona_horaria_argentina = pytz.timezone('America/Argentina/Buenos_Aires')
+fecha_hora_actual_argentina = fecha_hora_actual_utc.astimezone(zona_horaria_argentina)
 
 # Formatear la fecha y hora en un formato específico
-fecha_hora_formateada = fecha_hora_actual.strftime("%Y-%m-%d %H:%M:%S")
+fecha_hora_formateada = fecha_hora_actual_argentina.strftime("%Y-%m-%d %H:%M:%S")
 
 # Mostrar la fecha y hora de la última actualización en la barra lateral
 st.sidebar.write(f"Última actualización: {fecha_hora_formateada}")
