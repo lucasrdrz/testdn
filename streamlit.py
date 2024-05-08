@@ -45,6 +45,7 @@ resultado_final = resultado_final.sort_values(by='TICKETS AFECTADOS', ascending=
 
 st.table(resultado_final)
 
+st.markdown ('**SOLICITUDES**')
 # Filtrar las columnas deseadas
 columnas_deseadas = ['ESTATUS', 'VENDOR', 'ITEM', 'DESCRIPTION', 'QTY', 'REAL SHIPPING DATE', 'CUSTOMS ARRIVAL', 'ETA WAREHOUSE', 'REAL DELIVERY DATE']
 resultado_filtrado = daily[columnas_deseadas]
