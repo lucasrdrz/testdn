@@ -12,7 +12,7 @@ zona_horaria_argentina = pytz.timezone('America/Argentina/Buenos_Aires')
 fecha_hora_actual_argentina = fecha_hora_actual_utc.astimezone(zona_horaria_argentina)
 
 # Formatear la fecha y hora en un formato específico
-fecha_hora_formateada = fecha_hora_actual_argentina.strftime("%Y-%m-%d %H:%M:%S")
+fecha_hora_formateada = fecha_hora_actual_argentina.strftime("%d-%m-%Y")
 
 # Mostrar la fecha y hora de la última actualización en la barra lateral
 st.sidebar.write(f"Última actualización: {fecha_hora_formateada}")
