@@ -17,9 +17,9 @@ fecha_hora_formateada = fecha_hora_actual_argentina.strftime("%d-%m-%Y")
 st.sidebar.write(f"Última actualización: {fecha_hora_formateada}")
 
 # Cargar los archivos Excel
-df = pd.read_excel("intento70-30.xlsx")
-pdescripciones = pd.read_excel("FormatoNsPartes.xlsx")
-reporte_reparacion = pd.read_excel("ReporteReparacionEfectiveOnline.xlsx")
+df = pd.read_excel("./intento70-30.xlsx")
+pdescripciones = pd.read_excel("./FormatoNsPartes.xlsx")
+reporte_reparacion = pd.read_excel("./ReporteReparacionEfectiveOnline.xlsx")
 
 # Crear una tabla mínima de reporte_reparacion con 'TICKET NUMBER' y 'FECHA GENERACION TICKET'
 reporte_reparacion_min = reporte_reparacion[['TICKET NUMBER', 'FECHA GENERACION TICKET']]
