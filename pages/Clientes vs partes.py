@@ -25,7 +25,6 @@ df = pd.read_excel("intento70-30.xlsx")
 
 pdescripciones=pd.read_excel("FormatoNsPartes.xlsx")
 
-st.markdown ('**Impacto del Item en Clientes**')
 # Combinar los dataframes en función de la columna "PARTES" y "PARTE"
 merged_df = pd.merge(df, pdescripciones[['PARTE', 'DESCRIPCION']], how='left', left_on='PARTES', right_on='PARTE')
 
@@ -53,24 +52,28 @@ resultado_final = tickets_por_parte[['PARTES', 'DESCRIPCION', 'TICKETS AFECTADOS
 # Ordenar los resultados de mayor a menor según el número de tickets afectados
 resultado_final = resultado_final.sort_values(by='TICKETS AFECTADOS', ascending=False)
 
-
-#st.markdown ('CLIENTES AFECTADOS POR PARTE')
-
+st.markdown('CLIENTES AFECTADOS POR PARTE')
 
 # Obtener el número de parte específica ingresado por el usuario
-parte_especifica= st.selectbox("Selecciona una parte:", [""] + resultado_final['PARTES'].tolist())
+parte_especifica = st.selectbox("Selecciona una parte:", [""] + resultado_final['PARTES'].tolist())
 
 # Filtrar el DataFrame por la parte específica ingresada
-#parte_especifica = merged_df[merged_df['PARTES'] == int(parte_especifica)]
-parte_especifica = merged_df[merged_df['PARTES'] == parte_especifica]
+parte_especifica_df = merged_df[merged_df['PARTES'] == parte_especifica]
 
 # Verificar si hay datos para el número de parte ingresado
-if not parte_especifica.empty:
+if not parte_especifica_df.empty:
     # Contar la cantidad de veces que aparece cada cliente afectado
-    clientes_afectados = parte_especifica.groupby('NOMBRE CLIENTE').size().reset_index(name='TOTAL')
+    clientes_afectados = parte_especifica_df.groupby('NOMBRE CLIENTE').size().reset_index(name='TOTAL')
     
     # Ordenar los resultados de mayor a menor según la cantidad total de ocurrencias
     clientes_afectados = clientes_afectados.sort_values(by='TOTAL', ascending=False)
+    
+    # Calcular la suma total
+    total_sum = clientes_afectados['TOTAL'].sum()
+    
+    # Agregar la fila del total al final del DataFrame
+    total_row = pd.DataFrame({'NOMBRE CLIENTE': ['Total'], 'TOTAL': [total_sum]})
+    clientes_afectados = pd.concat([clientes_afectados, total_row], ignore_index=True)
 
     # Mostrar los resultados
     st.table(clientes_afectados)
