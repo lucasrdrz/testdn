@@ -40,36 +40,26 @@ merged_df.drop(columns=['PARTE'], inplace=True)
 # Unir merged_df con reporte_reparacion_min en función de 'TICKET NUMBER'
 merged_df = pd.merge(merged_df, reporte_reparacion_min, on='TICKET NUMBER', how='left')
 
-# Guardar el resultado si es necesario
-# merged_df.to_excel('resultado.xlsx', index=False)
+# Convertir la columna 'PARTES' a cadena de texto
+merged_df['PARTES'] = merged_df['PARTES'].astype(str)
 
-# Agrupar por número de parte y contar tickets únicos
-tickets_por_parte = df.groupby('PARTES')['TICKET NUMBER'].nunique().reset_index()
+# Crear una columna que contenga todas las partes asociadas con el mismo ticket, sin duplicados
+merged_df['OTRAS PARTES'] = merged_df.groupby('TICKET NUMBER')['PARTES'].transform(lambda x: ', '.join(sorted(set(x))))
 
-# Renombrar la columna 'TICKET NUMBER' a 'TICKETS AFECTADOS'
-tickets_por_parte.rename(columns={'TICKET NUMBER': 'TICKETS AFECTADOS'}, inplace=True)
-
-# Fusionar con pdescripciones para obtener descripciones
-tickets_por_parte = pd.merge(tickets_por_parte, pdescripciones[['PARTE', 'DESCRIPCION']], how='left', left_on='PARTES', right_on='PARTE')
-
-# Seleccionar las columnas requeridas
-resultado_final = tickets_por_parte[['PARTES', 'DESCRIPCION', 'TICKETS AFECTADOS']]
-
-# Ordenar los resultados de mayor a menor según el número de tickets afectados
-resultado_final = resultado_final.sort_values(by='TICKETS AFECTADOS', ascending=False)
-
-st.markdown('CLIENTES AFECTADOS POR PARTE')
-
-# Obtener el número de parte específica ingresado por el usuario
-parte_especifica = st.selectbox("Selecciona una parte:", [""] + resultado_final['PARTES'].tolist())
-
-# Filtrar el DataFrame por la parte específica ingresada
+# Combinar los datos para mostrar la parte específica y las otras partes
+parte_especifica = st.selectbox("Selecciona una parte:", [""] + merged_df['PARTES'].unique().tolist())
 parte_especifica_df = merged_df[merged_df['PARTES'] == parte_especifica]
 
-# Verificar si hay datos para el número de parte ingresado
+# Verificar si hay datos para la parte específica ingresada
 if not parte_especifica_df.empty:
+    # Eliminar la parte específica de la columna 'OTRAS PARTES'
+    parte_especifica_df['OTRAS PARTES'] = parte_especifica_df.apply(
+        lambda row: ', '.join([p for p in row['OTRAS PARTES'].split(', ') if p != parte_especifica]),
+        axis=1
+    )
+    
     # Seleccionar las columnas requeridas y eliminar duplicados
-    clientes_afectados = parte_especifica_df[['TICKET NUMBER', 'FECHA GENERACION TICKET', 'NOMBRE CLIENTE', 'PARTES']].drop_duplicates()
+    clientes_afectados = parte_especifica_df[['TICKET NUMBER', 'FECHA GENERACION TICKET', 'NOMBRE CLIENTE', 'PARTES', 'OTRAS PARTES']].drop_duplicates()
     
     # Contar la cantidad de veces que aparece cada cliente afectado
     clientes_totales = clientes_afectados.groupby('NOMBRE CLIENTE').size().reset_index(name='TOTAL')
