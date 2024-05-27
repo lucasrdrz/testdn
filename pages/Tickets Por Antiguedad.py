@@ -68,8 +68,8 @@ parte_especifica_df = merged_df[merged_df['PARTES'] == parte_especifica]
 
 # Verificar si hay datos para el número de parte ingresado
 if not parte_especifica_df.empty:
-    # Seleccionar las columnas requeridas
-    clientes_afectados = parte_especifica_df[['TICKET NUMBER', 'FECHA GENERACION TICKET', 'NOMBRE CLIENTE', 'PARTES']]
+    # Seleccionar las columnas requeridas y eliminar duplicados
+    clientes_afectados = parte_especifica_df[['TICKET NUMBER', 'FECHA GENERACION TICKET', 'NOMBRE CLIENTE', 'PARTES']].drop_duplicates()
     
     # Contar la cantidad de veces que aparece cada cliente afectado
     clientes_totales = clientes_afectados.groupby('NOMBRE CLIENTE').size().reset_index(name='TOTAL')
@@ -91,3 +91,6 @@ if not parte_especifica_df.empty:
     st.table(clientes_afectados)
 else:
     st.write("No se encontraron datos para el número de parte especificado.")
+
+
+
