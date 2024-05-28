@@ -2,7 +2,8 @@ import pandas as pd
 import streamlit as st
 import datetime
 import pytz
-
+from PIL import Image
+image = Image.open("./images/logo1.png")
 # Obtener la fecha y hora actual en UTC
 fecha_hora_actual_utc = datetime.datetime.now(pytz.utc)
 
