@@ -1,7 +1,10 @@
 import pandas as pd
 import streamlit as st
 import base64
+from PIL import Image
 
+image = Image.open("./images/logo1.png")
+st.sidebar.image(image,width=150,use_column_width=False)
 # Cargar los dataframes
 merged_df = pd.read_excel("./intento70-30.xlsx")
 pdescripciones = pd.read_excel("./FormatoNsPartes.xlsx")
