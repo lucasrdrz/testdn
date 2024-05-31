@@ -5,6 +5,13 @@ from PIL import Image
 
 image = Image.open("./images/logo1.png")
 st.sidebar.image(image,width=150,use_column_width=False)
+image1 = Image.open("./images/Solicitudes-Clientes.jpg")
+st.image(image1, caption=None, width=750, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+
+st.markdown('En esta pantalla podemos filtrar por cliente, nos mostrara los tickets actaules y las partes solictadas.')
+
+
+
 # Cargar los dataframes
 merged_df = pd.read_excel("./intento70-30.xlsx")
 pdescripciones = pd.read_excel("./FormatoNsPartes.xlsx")
