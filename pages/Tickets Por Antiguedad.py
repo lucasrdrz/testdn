@@ -6,6 +6,14 @@ from PIL import Image
 
 image = Image.open("./images/logo1.png")
 st.sidebar.image(image,width=150,use_column_width=False)
+
+image1 = Image.open("./images/Solicitudes-Smallparts-antiguedad.jpg")
+st.image(image1, caption=None, width=750, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+
+
+st.markdown ('En esta pantalla podemos seleccionar un modulo y vemos como afecta en cada uno de los clientes y lo vemos ordenamos del mas antiguo al mas actual')
+
+
 # Obtener la fecha y hora actual en UTC
 fecha_hora_actual_utc = datetime.datetime.now(pytz.utc)
 
