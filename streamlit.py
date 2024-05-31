@@ -29,8 +29,7 @@ st.sidebar.write(f"Última actualización: {fecha_hora_formateada}")
 
 
 
-st.markdown ('En esta pantalla vemos los modulos con mas solicitudes por parte de los tecnicos. 
-Tambien podemos ver las solicitudes de compra de estas partes y el estado de las mismas')
+st.markdown ('En esta pantalla vemos los modulos con mas solicitudes por parte de los tecnicos. Tambien podemos ver las solicitudes de compra de estas partes y el estado de las mismas')
 pip.main(["install","openpyxl"])
 
 df = pd.read_excel("intento70-30.xlsx")
